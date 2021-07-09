@@ -7,13 +7,17 @@ import {
   StatusBar,
   FlatList,
 } from 'react-native';
+
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+
 const todoList = [
   { id: '1', text: 'prompt 1' },
   { id: '2', text: 'prompt 2' },
   { id: '3', text: 'prompt 3' },
 ];
+
 const Separator = () => <View style={styles.itemSeparator} />;
+
 const LeftSwipeActions = () => {
   return (
     <View
@@ -33,6 +37,7 @@ const LeftSwipeActions = () => {
     </View>
   );
 };
+
 const rightSwipeActions = () => {
   return (
     <View
@@ -62,7 +67,8 @@ const swipeFromLeftOpen = () => {
 const swipeFromRightOpen = () => {
   //alert('Swipe from right');
 };
-const ListItem = ({ text }) => (
+
+const SwipeableListItem = ({ text }) => (
   <Swipeable
     renderLeftActions={LeftSwipeActions}
     renderRightActions={rightSwipeActions}
@@ -82,6 +88,7 @@ const ListItem = ({ text }) => (
     </View>
   </Swipeable>
 );
+
 const SwipeGesture = () => {
   return (
     <>
@@ -110,4 +117,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#444',
   },
 });
-export default SwipeGesture;
+export default SwipeableListItem;
