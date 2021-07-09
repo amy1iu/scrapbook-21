@@ -12,16 +12,14 @@ const HomeFeedScreen = props => {
   const renderSwipeableListItem = itemData => {
     return (
         <Swipeable
-            renderLeftActions={LeftSwipeActions}
-            renderRightActions={() => {
-                props.navigation.navigate({
-                  routeName: 'Cam',
-                  params: {
+            //renderLeftActions={}
+            //renderRightActions=
+            onSwipeableRightOpen={() => {
+                props.navigation.navigate('Cam', {
                     categoryId: itemData.item.id
                   }
-                });
+                );
               }}
-            //onSwipeableRightOpen={swipeFromRightOpen}
             //onSwipeableLeftOpen={swipeFromLeftOpen}
         >
             <View
