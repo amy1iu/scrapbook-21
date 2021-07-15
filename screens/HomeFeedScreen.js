@@ -7,20 +7,26 @@ import {
 } from 'react-native';
 import { PROMPTS } from '../fake-data';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { LeftSwipeActions } from '../SwipeableListItem';
 
 const HomeFeedScreen = props => {
   const renderSwipeableListItem = itemData => {
     return (
         <Swipeable
-            //renderLeftActions={}
-            //renderRightActions=
-            onSwipeableRightOpen={() => {
+            renderLeftActions={LeftSwipeActions}
+            renderRightActions= {LeftSwipeActions}
+            onSwipeableRightWillOpen={() => {
+                props.navigation.navigate('Stories', {
+                    categoryId: itemData.item.id
+                  }
+                );
+              }}
+            onSwipeableLeftOpen={() => {
                 props.navigation.navigate('Cam', {
                     categoryId: itemData.item.id
                   }
                 );
               }}
-            //onSwipeableLeftOpen={swipeFromLeftOpen}
         >
             <View
             style={{

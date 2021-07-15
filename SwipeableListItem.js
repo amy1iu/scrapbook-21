@@ -18,7 +18,7 @@ const todoList = [
 
 const Separator = () => <View style={styles.itemSeparator} />;
 
-const LeftSwipeActions = () => {
+export const LeftSwipeActions = props => {
   return (
     <View
       style={{ flex: 1, backgroundColor: '#ccffbd', justifyContent: 'center' }}
@@ -32,7 +32,7 @@ const LeftSwipeActions = () => {
           paddingVertical: 20,
         }}
       >
-        Stories
+        {props.text}
       </Text>
     </View>
   );
