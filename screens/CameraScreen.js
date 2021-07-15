@@ -7,6 +7,7 @@ const CameraScreen = () => {
             <Text>Camera Screen</Text>
         </View>
     );
+    
 }
 
 export default CameraScreen;
