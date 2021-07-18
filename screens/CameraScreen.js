@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ImageBackground } from 'react-native';
 import { Camera } from 'expo-camera';
-import CameraPreview from '../components/CameraPreview';
+import CameraPreview, { styles } from '../components/CameraPreview';
 import * as Permissions from 'expo-permissions';
 
 const CameraScreen = () => {
@@ -9,6 +9,7 @@ const CameraScreen = () => {
     const [type, setType] = useState(Camera.Constants.Type.back);
     const [previewVisible, setPreviewVisible] = useState(false);
     const [capturedImage, setCapturedImage] = useState(null);
+    const [flashMode, setFlashMode] = useState('off')
     
     useEffect(() => {
         (async () => {
@@ -39,14 +40,78 @@ const CameraScreen = () => {
         );
     }
 
+    const changeFlashMode = () => {
+        if (flashMode === 'on') {
+            setFlashMode('off');
+        } else if (flashMode === 'off') {
+            setFlashMode('on');
+        } else {
+            setFlashMode('auto');
+        }
+    }
+
+    const retakePhoto = () => {
+        setCapturedImage(null);
+        setPreviewVisible(false);
+    }
+
+    const savePhoto = () => {
+
+    }
+
     return (
         <View style={styles.container}>
             {previewVisible && capturedImage ? (
-                <CameraPreview photo= {capturedImage}/>
+                <CameraPreview photo= {capturedImage} retakePhoto={retakePhoto} savePhoto={savePhoto}/>
             ) : (
                 <Camera style={styles.camera} 
                         type={type} 
+                        flashMode={flashMode}
                         ref={ref => {this.camera = ref;}}>
+                    <View
+                    style={{
+                        position: 'absolute',
+                        left: '5%',
+                        top: '10%',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between'
+                    }}
+                    >
+                        <TouchableOpacity
+                            onPress={changeFlashMode}
+                            style={{
+                            backgroundColor: flashMode === 'off' ? '#000' : '#fff',
+                            borderRadius: '50%',
+                            height: 25,
+                            width: 25
+                            }}
+                        >
+                            <Text
+                            style={{
+                                fontSize: 20
+                            }}
+                            >
+                            ⚡️
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={switchCameraFunc}
+                            style={{
+                            marginTop: 20,
+                            borderRadius: '50%',
+                            height: 25,
+                            width: 25
+                            }}
+                        >
+                            <Text
+                            style={{
+                                fontSize: 20
+                            }}
+                            >
+                            {type === 'front' ? '🤳' : '📷'}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                     <View style={styles.bottomRow}>
                         <View style={styles.shutterPosition}>
                             <TouchableOpacity
@@ -60,53 +125,6 @@ const CameraScreen = () => {
         </View>
     );
 }
-    
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    camera: {
-        flex: 1,
-    },
-    buttonContainer: {
-        flex: 1,
-        backgroundColor: 'transparent',
-        flexDirection: 'row',
-        margin: 20,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    button: {
-        flex: 0.1,
-        alignSelf: 'flex-end',
-        alignItems: 'center',
-    },
-    bottomRow: {
-        position: 'absolute',
-        bottom: 0,
-        flexDirection: 'row',
-        flex: 1,
-        width: '100%',
-        padding: 20,
-        justifyContent: 'space-between'
-    },
-    shutterPosition: {
-        alignSelf: 'center',
-        flex: 1,
-        alignItems: 'center'
-    },
-    shutterButton: {
-        width: 70,
-        height: 70,
-        bottom: 0,
-        borderRadius: 50,
-        backgroundColor: '#fff'
-    },
-    text: {
-        fontSize: 18,
-        color: 'white',
-    },
-});
 
 export default CameraScreen;
 
