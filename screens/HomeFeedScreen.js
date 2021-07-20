@@ -9,9 +9,11 @@ import { PROMPTS } from '../fake-data';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { LeftSwipeActions } from '../SwipeableListItem';
 import { Picker } from '@react-native-picker/picker';
+import { useSelector, useDispatch } from 'react-redux';
+import { switchUser } from '../redux/images-act';
 
 const HomeFeedScreen = props => {
-  const [selectedUser, setSelectedUser] = useState(1);
+  const dispatch = useDispatch();
   const renderSwipeableListItem = itemData => {
     return (
         <Swipeable
@@ -54,9 +56,9 @@ const HomeFeedScreen = props => {
       numColumns={1}
       />
       <Picker
-        selectedValue={selectedUser}
+        selectedValue={useSelector(state => state.imager.currentUser)}
         onValueChange={(itemValue, itemIndex) =>
-          setSelectedUser(itemValue)
+          dispatch(switchUser(itemValue))
         }>
         <Picker.Item label="User One" value={1} />
         <Picker.Item label="User Two" value={2} />
