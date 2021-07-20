@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,10 @@ import {
 import { PROMPTS } from '../fake-data';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { LeftSwipeActions } from '../SwipeableListItem';
+import { Picker } from '@react-native-picker/picker';
 
 const HomeFeedScreen = props => {
+  const [selectedUser, setSelectedUser] = useState(1);
   const renderSwipeableListItem = itemData => {
     return (
         <Swipeable
@@ -44,12 +46,24 @@ const HomeFeedScreen = props => {
   };
 
   return (
-    <FlatList
+    <View>
+      <FlatList
       keyExtractor={(item, index) => item.id}
       data={PROMPTS}
       renderItem={renderSwipeableListItem}
       numColumns={1}
-    />
+      />
+      <Picker
+        selectedValue={selectedUser}
+        onValueChange={(itemValue, itemIndex) =>
+          setSelectedUser(itemValue)
+        }>
+        <Picker.Item label="User One" value={1} />
+        <Picker.Item label="User Two" value={2} />
+        <Picker.Item label="User Three" value={3} />
+      </Picker>
+    </View>
+    
   );
 };
 

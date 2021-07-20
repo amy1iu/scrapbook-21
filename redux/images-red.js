@@ -1,4 +1,5 @@
 const initialState = {
+    currentUser: 1,
     images: []
 };
 
