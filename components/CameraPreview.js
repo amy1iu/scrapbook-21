@@ -1,8 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, TouchableOpacity} from 'react-native';
 import Camera from 'expo-camera';
+import { useDispatch, useSelector } from 'react-redux';
+import { addImage } from '../redux/images-act';
 
 const CameraPreview = props => {
+
+        const dispatch = useDispatch();
+    
+        const currentUser = useSelector(state => state.imager.currentUser);
+        const currentPrompt = useSelector(state => state.imager.currentPrompt);
+      
+        const savePhoto = (user, prompt) => {
+              dispatch(addImage(props.photo,user,prompt));
+        //console.log(capturedImage);
+    }
+
     return (
         <View style={styles.previewContainer}>
             <ImageBackground
@@ -25,7 +38,7 @@ const CameraPreview = props => {
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={props.savePhoto}
+                            onPress={() => savePhoto(currentUser,currentPrompt)}
                             style={styles.bottomButton}
                         >
                             <Text style={styles.bottomText}>

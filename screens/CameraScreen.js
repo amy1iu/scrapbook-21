@@ -31,7 +31,7 @@ const CameraScreen = () => {
         if (!this.camera) return;
         const photo = await this.camera.takePictureAsync({
             base64: true,
-            quality: 0.5
+            quality: 0
         });
         //console.log(photo);
         setPreviewVisible(true);
@@ -61,15 +61,12 @@ const CameraScreen = () => {
         setPreviewVisible(false);
     }
 
-    const savePhoto = () => {
-        const currentUser = useSelector(state => state.imager.currentUser);
-        console.log(capturedImage);
-    }
+
 
     return (
         <View style={styles.container}>
             {previewVisible && capturedImage ? (
-                <CameraPreview photo= {capturedImage} retakePhoto={retakePhoto} savePhoto={savePhoto}/>
+                <CameraPreview photo= {capturedImage} retakePhoto={retakePhoto}/>
             ) : (
                 <Camera style={styles.camera} 
                         type={type} 

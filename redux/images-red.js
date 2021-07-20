@@ -14,6 +14,7 @@ const imagesReducer = (state = initialState, action) => {
             return {...state, currentPrompt: action.newPrompt};
         }
         case ADD_IMAGE:
+            console.log(action.image);
             return {...state, images: state.images.concat([action.image, action.curUser, action.curPrompt])};
         default:
             return state;
