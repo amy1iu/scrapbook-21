@@ -1,5 +1,7 @@
+import Prompt from './components/Prompt';
+
 export const PROMPTS = [
-    { id: '1', text: 'prompt 1' },
-    { id: '2', text: 'prompt 2' },
-    { id: '3', text: 'prompt 3' },
+    new Prompt('1', 'prompt 1'),
+    new Prompt('2', 'prompt 2'),
+    new Prompt('3', 'prompt 3')
   ];

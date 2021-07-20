@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ImageBackground } from 'react
 import { Camera } from 'expo-camera';
 import CameraPreview, { styles } from '../components/CameraPreview';
 import * as Permissions from 'expo-permissions';
+import { useSelector, useDispatch } from 'react-redux';
 
 const CameraScreen = () => {
     const [hasPermission, setHasPermission] = useState(null);
@@ -10,6 +11,7 @@ const CameraScreen = () => {
     const [previewVisible, setPreviewVisible] = useState(false);
     const [capturedImage, setCapturedImage] = useState(null);
     const [flashMode, setFlashMode] = useState('off')
+    const dispatch = useDispatch();
     
     useEffect(() => {
         (async () => {
@@ -60,6 +62,7 @@ const CameraScreen = () => {
     }
 
     const savePhoto = () => {
+        const currentUser = useSelector(state => state.imager.currentUser);
         console.log(capturedImage);
     }
 

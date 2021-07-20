@@ -10,27 +10,21 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { LeftSwipeActions } from '../SwipeableListItem';
 import { Picker } from '@react-native-picker/picker';
 import { useSelector, useDispatch } from 'react-redux';
-import { switchUser } from '../redux/images-act';
+import { switchUser, changePrompt } from '../redux/images-act';
 
 const HomeFeedScreen = props => {
   const dispatch = useDispatch();
   const renderSwipeableListItem = itemData => {
+    const swipeOpenHandler = (screen, text) => {
+      props.navigation.navigate(screen);
+      dispatch(changePrompt(text));
+    }
     return (
         <Swipeable
             renderLeftActions={LeftSwipeActions}
             renderRightActions= {LeftSwipeActions}
-            onSwipeableRightWillOpen={() => {
-                props.navigation.navigate('Stories', {
-                    categoryId: itemData.item.id
-                  }
-                );
-              }}
-            onSwipeableLeftOpen={() => {
-                props.navigation.navigate('Cam', {
-                    categoryId: itemData.item.id
-                  }
-                );
-              }}
+            onSwipeableRightWillOpen={() => swipeOpenHandler('Stories', itemData.item.text)}
+            onSwipeableLeftOpen={() => swipeOpenHandler('Cam', itemData.item.text)}
         >
             <View
             style={{
