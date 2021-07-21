@@ -1,32 +1,32 @@
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity} from 'react-native';
-import Camera from 'expo-camera';
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addImage } from '../redux/images-act';
 
 const CameraPreview = props => {
 
-        const dispatch = useDispatch();
-    
-        const currentUser = useSelector(state => state.imager.currentUser);
-        const currentPrompt = useSelector(state => state.imager.currentPrompt);
-      
-        const savePhoto = (user, prompt) => {
-              dispatch(addImage(props.photo,user,prompt));
-        //console.log(capturedImage);
+    const dispatch = useDispatch();
+
+    const currentUser = useSelector(state => state.imager.currentUser);
+    const currentPrompt = useSelector(state => state.imager.currentPrompt);
+
+    const savePhoto = (user, prompt) => {
+        dispatch(addImage(props.photo.uri, user, prompt));
+        
     }
+    console.log(props.photo);
 
     return (
         <View style={styles.previewContainer}>
             <ImageBackground
-                source={{uri: props.photo && props.photo.uri}}
+                source={{ uri: props.photo && props.photo.uri }}
                 style={styles.container}
             >
                 <View style={styles.previewBottomRow}>
                     <View
                         style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between'
+                            flexDirection: 'row',
+                            justifyContent: 'space-between'
                         }}
                     >
                         <TouchableOpacity
@@ -34,20 +34,20 @@ const CameraPreview = props => {
                             style={styles.bottomButton}
                         >
                             <Text style={styles.bottomText}>
-                            Re-take
+                                Re-take
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => savePhoto(currentUser,currentPrompt)}
+                            onPress={() => savePhoto(currentUser, currentPrompt)}
                             style={styles.bottomButton}
                         >
                             <Text style={styles.bottomText}>
-                            Save Photo
+                                Save Photo
                             </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-            </ImageBackground>     
+            </ImageBackground>
         </View>
     );
 }

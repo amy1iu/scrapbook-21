@@ -30,7 +30,7 @@ const CameraScreen = () => {
     const takePicHandler = async () => {
         if (!this.camera) return;
         const photo = await this.camera.takePictureAsync({
-            base64: true,
+            //base64: true,
             quality: 0
         });
         //console.log(photo);
@@ -60,8 +60,6 @@ const CameraScreen = () => {
         setCapturedImage(null);
         setPreviewVisible(false);
     }
-
-
 
     return (
         <View style={styles.container}>

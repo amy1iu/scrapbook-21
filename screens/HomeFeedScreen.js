@@ -3,7 +3,7 @@ import {
   View,
   Text,
   FlatList,
-  StyleSheet,
+  StyleSheet, ImageBackground
 } from 'react-native';
 import { PROMPTS } from '../fake-data';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -43,6 +43,8 @@ const HomeFeedScreen = props => {
 
   return (
     <View>
+      <ImageBackground source={{uri: "https://s.yimg.com/aah/craftersmarket/paper-by-the-sheet-scrapbook-2465-items-3.gif"}} style={{height:100}}>
+      </ImageBackground>
       <FlatList
       keyExtractor={(item, index) => item.id}
       data={PROMPTS}
