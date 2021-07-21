@@ -1,10 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text, View, ImageBackground} from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, ImageBackground, TouchableWithoutFeedback, TouchableWithoutFeedbackComponent} from 'react-native';
 import { useSelector } from 'react-redux';
-import CameraPreview from '../components/CameraPreview';
-//import { StoryContainer } from 'react-native-stories-view';
+//import { ProgressBar } from 'react-native-stories-view';
 
-const StoriesScreen = () => {
+const StoriesScreen = props => {
+    const [photoIndex, setPhotoIndex] = useState(0);
     const currentUser = useSelector(state => state.imager.currentUser);
     const currentPrompt = useSelector(state => state.imager.currentPrompt);
     const allImages = useSelector(state => state.imager.images);
@@ -12,15 +12,27 @@ const StoriesScreen = () => {
     const storyObjs = allImages.filter(imgObj => imgObj[2]===(currentPrompt) ); //still array of arrays && imgObj[1]!==(currentUser)
     const storyImages = storyObjs.map(obj => obj[0]);
 
-    const photo = storyImages[0]; 
-    console.log(photo);
+    const tapHandler = () => {
+        if (photoIndex < storyObjs.length-1) {
+            setPhotoIndex(photoIndex+1);
+        }
+        else {
+            props.navigation.navigate('Home');
+        }
+    }
+
+    const photo = storyObjs[photoIndex][0]; 
+    const photographer = storyObjs[photoIndex][1];
+    //console.log(photo);
 
     return ( //restyle maybe
         <View style={styles.container}>
             <View style={styles.previewContainer}>
+                <TouchableWithoutFeedback onPress={tapHandler}>
                 <ImageBackground source={{uri: photo}} style={styles.container}> 
-                    <Text style={{fontSize:100, color:999999}}>stories screen</Text>
+                    <Text style={{fontSize:50, color:'white'}}> {photographer} </Text>
                 </ImageBackground>
+                </TouchableWithoutFeedback>
             </View>
         </View> 
         

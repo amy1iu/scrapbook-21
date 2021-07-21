@@ -14,7 +14,7 @@ const CameraPreview = props => {
         dispatch(addImage(props.photo.uri, user, prompt));
         
     }
-    console.log(props.photo);
+    //console.log(props.photo);
 
     return (
         <View style={styles.previewContainer}>
