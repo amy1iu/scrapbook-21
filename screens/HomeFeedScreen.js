@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet, ImageBackground
-} from 'react-native';
+import { View, Text,FlatList, StyleSheet, ImageBackground, Button} from 'react-native';
 import { PROMPTS } from '../fake-data';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { LeftSwipeActions } from '../SwipeableListItem';
@@ -51,6 +46,7 @@ const HomeFeedScreen = props => {
       renderItem={renderSwipeableListItem}
       numColumns={1}
       />
+      <Button title='Go to Profile' onPress={() => props.navigation.navigate('Profile')}/>
       <Picker
         selectedValue={useSelector(state => state.imager.currentUser)}
         onValueChange={(itemValue, itemIndex) =>
