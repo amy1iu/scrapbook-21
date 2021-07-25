@@ -10,8 +10,8 @@ const StoriesScreen = props => {
     const allImages = useSelector(state => state.imager.images);
     const photo = null;
 
-    const storyObjs = allImages.filter(imgObj => imgObj[2]===(currentPrompt) ); //still array of arrays && imgObj[1]!==(currentUser)
-    const storyImages = storyObjs.map(obj => obj[0]);
+    const storyObjs = allImages.filter(imgObj => imgObj.prompt===(currentPrompt) ); //still array of arrays && imgObj[1]!==(currentUser)
+    //const storyImages = storyObjs.map(obj => obj[0]);
 
     const tapHandler = () => {
         if (storyObjs.length <= 0) {
@@ -27,12 +27,12 @@ const StoriesScreen = props => {
         }
     }
     
-    function check(index) {
+    function check() {
         if (storyObjs.length <= 0) {
-            return;
+            return false;
         }
         else {
-            return storyObjs[photoIndex][index];
+            return true;
         }
     }
 
@@ -44,9 +44,13 @@ const StoriesScreen = props => {
         <View style={styles.container}>
             <View style={styles.previewContainer}>
                 <TouchableWithoutFeedback onPress={tapHandler}>
-                <ImageBackground source={{uri: check(0)}} style={styles.container}> 
-                    <Text style={{fontSize:50, color:'white'}}> {check(1)} </Text>
-                </ImageBackground>
+                {check() ? (
+                    <ImageBackground source={{uri: storyObjs[photoIndex].imageBase}} style={styles.container}> 
+                        <Text style={{fontSize:50, color:'white'}}> {storyObjs[photoIndex].user} </Text>
+                    </ImageBackground>
+                ) : (
+                    <Text>No Stories Yet!</Text>
+                )}
                 </TouchableWithoutFeedback>
             </View>
         </View> 

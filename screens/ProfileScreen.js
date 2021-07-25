@@ -8,9 +8,9 @@ const ProfileScreen = props => {
     const [photoIndex, setPhotoIndex] = useState(0);
     const currentUser = useSelector(state => state.imager.currentUser);
     const allImages = useSelector(state => state.imager.images);
-    const profObjs = allImages.filter(imgObj => imgObj[1]===(currentUser) );
-    const profImages = profObjs.map(obj => obj[0]);
-    console.log(profImages);
+    const profObjs = allImages.filter(imgObj => imgObj.user===(currentUser) );
+    //const profImages = profObjs.map(obj => obj[0]);
+    //console.log(profImages);
     const renderContactHeader = () => {  
         return (
             <View style={styles.headerContainer}>
@@ -46,11 +46,11 @@ const ProfileScreen = props => {
     }
     //const photo = profImages(photoIndex);
     function check() {
-        if (profImages.length <= 0) {
-            return;
+        if (profObjs.length <= 0) {
+            return false;
         }
         else {
-            return profImages[photoIndex];
+            return true;
         }
     }
     return (
@@ -60,9 +60,15 @@ const ProfileScreen = props => {
                     {renderContactHeader()}
                 </View> 
                 <View style={{flex: 2}}>
-                    <TouchableWithoutFeedback onPress={tapHandler}>
-                        <Image source={{uri: check()}} style={styles.container}/> 
-                    </TouchableWithoutFeedback>
+                    {check() ? (
+                        <TouchableWithoutFeedback onPress={tapHandler}>
+                            <Image source={{uri: profObjs[photoIndex].imageBase}} style={styles.container}/> 
+                        </TouchableWithoutFeedback>
+                    ) : (
+                        <View>
+                            <Text>Nothing here yet!</Text>
+                        </View>
+                    )}
                 </View>
             </View>
         </ScrollView>

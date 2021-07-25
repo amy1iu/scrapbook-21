@@ -11,5 +11,23 @@ export const changePrompt = (text) => {
 }
 
 export const addImage = (image, user, prompt) => {
-    return {type: ADD_IMAGE, image: image, curUser: user, curPrompt: prompt}
+    return async dispatch => {
+        const response = await fetch('https://scrapbook-ad78a-default-rtdb.firebaseio.com/photos.json', {
+            method: 'POST',
+            headers: {
+                'Content_Type': 'application/json'
+            },
+            body: JSON.stringify({
+                image,
+                user,
+                prompt
+            })
+        });
+        const resData = await response.json();
+        dispatch({type: ADD_IMAGE, 
+                id: resData.name,
+                image: image, 
+                curUser: user, 
+                curPrompt: prompt})
+    };
 };

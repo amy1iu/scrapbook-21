@@ -1,4 +1,5 @@
 import { SWITCH_USER, ADD_IMAGE, CHANGE_PROMPT } from './images-act';
+import Photo from '../components/Photo';
 
 const initialState = {
     currentUser: 1,
@@ -14,8 +15,12 @@ const imagesReducer = (state = initialState, action) => {
             return {...state, currentPrompt: action.newPrompt};
         }
         case ADD_IMAGE:
-            console.log(action.image);
-            return {...state, images: state.images.concat([[action.image, action.curUser, action.curPrompt]])};
+            const newPhoto = new Photo(
+                action.id,
+                action.curPrompt,
+                action.image,
+                action.curUser);
+            return {...state, images: state.images.concat(newPhoto)};
         default:
             return state;
     } 
