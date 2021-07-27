@@ -1,4 +1,4 @@
-import { SWITCH_USER, ADD_IMAGE, CHANGE_PROMPT } from './images-act';
+import { SWITCH_USER, ADD_IMAGE, CHANGE_PROMPT, GRAB_IMAGES } from './images-act';
 import Photo from '../components/Photo';
 
 const initialState = {
@@ -9,6 +9,8 @@ const initialState = {
 
 const imagesReducer = (state = initialState, action) => {
     switch (action.type) {
+        case GRAB_IMAGES:
+            return {...state, images: action.images}
         case SWITCH_USER:
             return {...state, currentUser: action.userValue};
         case CHANGE_PROMPT: {

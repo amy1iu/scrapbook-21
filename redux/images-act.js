@@ -1,6 +1,32 @@
+import Photo from '../components/Photo';
+
 export const SWITCH_USER = 'SWITCH_USER';
 export const ADD_IMAGE = 'ADD_IMAGE';
 export const CHANGE_PROMPT = 'CHANGE_PROMPT';
+export const GRAB_IMAGES = 'GRAB_IMAGES';
+
+export const fetchImages = () => {
+    return async dispatch => {
+        const response = await fetch('https://scrapbook-ad78a-default-rtdb.firebaseio.com/photos.json');
+        const resData = await response.json();
+        
+        const loadedImages = [];
+        for (const key in resData) {
+            loadedImages.push(
+                new Photo(
+                    key,
+                    resData[key].prompt,
+                    resData[key].image,
+                    resData[key].user
+                )
+            );
+        }
+        console.log(loadedImages);
+        dispatch({type: GRAB_IMAGES, 
+                images: loadedImages});
+
+    }
+}
 
 export const switchUser = (uValue) => {
     return { type: SWITCH_USER, userValue: uValue}
@@ -28,6 +54,6 @@ export const addImage = (image, user, prompt) => {
                 id: resData.name,
                 image: image, 
                 curUser: user, 
-                curPrompt: prompt})
+                curPrompt: prompt});
     };
 };

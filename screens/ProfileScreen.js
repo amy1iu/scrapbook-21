@@ -1,10 +1,16 @@
-import React, {useState} from 'react';
-import { ScrollView, View, Text, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
-import { useSelector } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import { ScrollView, View, Text, StyleSheet, Image, ImageBackground, TouchableWithoutFeedback } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'react-native-uuid';
+import { fetchImages } from '../redux/images-act';
 //import { TabView } from 'react-native-tab-view';
 
 const ProfileScreen = props => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchImages());
+    },[dispatch])
+
     const [photoIndex, setPhotoIndex] = useState(0);
     const currentUser = useSelector(state => state.imager.currentUser);
     const allImages = useSelector(state => state.imager.images);
@@ -62,7 +68,9 @@ const ProfileScreen = props => {
                 <View style={{flex: 2}}>
                     {check() ? (
                         <TouchableWithoutFeedback onPress={tapHandler}>
-                            <Image source={{uri: profObjs[photoIndex].imageBase}} style={styles.container}/> 
+                            <ImageBackground source={{uri: profObjs[photoIndex].imageBase}} style={styles.container}>
+                                <Text style={{borderColor: 'white', borderWidth: 10}}>{profObjs[photoIndex].prompt}</Text>
+                            </ImageBackground> 
                         </TouchableWithoutFeedback>
                     ) : (
                         <View>
