@@ -69,7 +69,7 @@ const ProfileScreen = props => {
                     {check() ? (
                         <TouchableWithoutFeedback onPress={tapHandler}>
                             <ImageBackground source={{uri: profObjs[photoIndex].imageBase}} style={styles.container}>
-                                <Text style={{borderColor: 'white', borderWidth: 10}}>{profObjs[photoIndex].prompt}</Text>
+                                <Text style={{color: 'white', textAlign: 'center', fontSize: 20}}>{profObjs[photoIndex].prompt}</Text>
                             </ImageBackground> 
                         </TouchableWithoutFeedback>
                     ) : (
